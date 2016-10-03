@@ -131,7 +131,9 @@
   <script type="text/javascript">
 
   
-
+if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
       
      	<!-- Where to put the globe?-->
 var container = document.getElementById( 'container' );
