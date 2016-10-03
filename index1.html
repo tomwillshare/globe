@@ -135,45 +135,47 @@ if(!Detector.webgl){
       Detector.addGetWebGLMessage();
     } else {
       
-     	<!-- Where to put the globe?-->
+     	<!-- Happy with this line making container-->
 var container = document.getElementById( 'container' );
 
-	<!--Make the globe-->
+	<!--Happy with this line making globe in the container-->
 var globe = new DAT.Globe( container );
 
-	<!--Were going to ask a file for the JSON data.-->
+	<!--I think i may need something in before the $.getJson bit to the HTML knows to look for the json file ??-->
 $.getJSON('http://api.open-notify.org/iss-now.json?callback=?', function(data) {
   var lat = data['iss_position']['latitude'];
   var lon = data['iss_position']['longitude'];
 });
 
-	<!--What do we do when we have it?-->
+	<!--notsure what this means-->
 xhr.onreadystatechange = function() {
 
- 	<!--If weve received the data-->
+ 	<!--think this is me getting the data-->
    	 if ( xhr.readyState === 4 && xhr.status === 200 ) {
 
         <!--Parse the JSON-->
         var data = JSON.parse( xhr.responseText );
 
         <!--Tell the globe about your JSON data-->
-       globe.addData([lat, lon], {format: 'magnitude', name: "Now", animated: true});
+       globe.addData(data[lat, lon], {format: 'magnitude', name: "Now", animated: true});
         
 
         <!--Create the geometry-->
         globe.createPoints();
-
+		settime(globe,0)();
+ 
         <!--Begin animation-->
         globe.animate();
+		document.body.style.backgroundImage = 'none'; // remove loading
 
-	 }
-	 }
+    }
+	}
 };
 
 // Begin request
 xhr.send( null );
     }
-
+}
   </script>
 
   </body>
